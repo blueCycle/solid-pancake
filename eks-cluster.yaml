@@ -17,10 +17,16 @@ vpc:
 
 managedNodeGroups:
   - name: ng-12345
-    instanceType: t3.medium
+    instanceType: m5.large
     desiredCapacity: 2
     minSize: 2
     maxSize: 10
+    availabilityZones: ["us-west-2a", "us-west-2b"]
     privateNetworking: true # if only 'Private' subnets are given, this must be enabled
     ssh: # use existing EC2 key
       publicKeyName: ec2-us-west-2
+    iam:
+      withAddonPolicies:
+        albIngress: true
+        autoScaler: true
+        cloudWatch: true
