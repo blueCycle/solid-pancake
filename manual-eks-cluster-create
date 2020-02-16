@@ -1,0 +1,11 @@
+SecurityGroups
+sg-0e27c62917b6dba3c
+
+SubnetIds
+us-west-2a-public subnet-003d0e24b917d3ad7
+us-west-2b-public subnet-049652ee00fd69b76
+us-west-2a-private subnet-0237ae7b6314847b5
+us-west-2b-private subnet-0e2bc25a044d6a392
+
+VpcId
+vpc-091abeedd72452d4f	
