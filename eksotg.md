@@ -84,3 +84,24 @@ helm completion bash >> ~/.bash_completion
 . ~/.bash_completion
 ```
 
+To update Helm’s local list of Charts, run:
+
+```
+helm repo update
+```
+
+To add the Bitnami Chart repo to our local list of searchable charts:
+
+```
+helm repo add bitnami https://charts.bitnami.com/bitnami
+```
+How can you use Helm to deploy the bitnami/nginx chart?
+
+```
+helm install --name mywebserver bitnami/nginx
+```
+```
+helm delete --purge mywebserver
+```
+
+
