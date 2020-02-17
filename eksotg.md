@@ -104,4 +104,24 @@ helm install --name mywebserver bitnami/nginx
 helm delete --purge mywebserver
 ```
 
+Deloy Metrics Server
 
+```
+helm install stable/metrics-server \
+    --name metrics-server \
+    --version 2.0.4 \
+    --namespace metrics
+```
+
+Confirm the Metrics API is available. 
+
+```
+kubectl get apiservice v1beta1.metrics.k8s.io -o yaml
+```
+
+Test Horizontal Pod Auto Scaling (HPA) - This HPA scales up when CPU exceeds 50% of the allocated container resource.
+
+```
+kubectl run php-apache --image=k8s.gcr.io/hpa-example --requests=cpu=200m --expose --port=80
+kubectl autoscale deployment php-apache --cpu-percent=50 --min=1 --max=10
+```
