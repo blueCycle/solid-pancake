@@ -1,29 +1,50 @@
-# An example of ClusterConfig object with highly available NAT gateways
+#  example of ClusterConfig object with highly available NAT gateways
 --- 
 apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
 metadata:
-  name: eks-otg
+  name: eksotguswest2
   region: us-west-2
   
 cloudWatch:
   clusterLogging:
     enableTypes: ["*"]
 
+#vpc:
+#  nat:
+#    gateway: HighlyAvailable # other options: Disable, Single (default)
+
 vpc:
-  nat:
-    gateway: HighlyAvailable # other options: Disable, Single (default)
+  id: "vpc-0ebc4678a23f7e35c"  # (optional, must match VPC ID used for each subnet below)
+  cidr: "192.168.0.0/16"       # (optional, must match CIDR used by the given VPC)
+  subnets: # must provide 'private' and/or 'public' subnets by availibility zone as shown
+    private:
+      us-west-2a:
+        id: "subnet-0785b10a91cc50df0"
+        cidr: "192.168.128.0/20" # (optional, must match CIDR used by the given subnet)
+      us-west-2b:
+        id: "subnet-00bb8c123d23af094"
+        cidr: "192.168.192.0/20"  # (optional, must match CIDR used by the given subnet)
+    public:
+      us-west-2a:
+        id: "subnet-08f02f0e21ba5e359"
+        cidr: "192.168.0.0/24"
+      us-west-2b:
+        id: "subnet-0762e359281e68ca9"
+        cidr: "192.168.64.0/24"  # (optional, must match CIDR used by the given subnet)
+
 
 managedNodeGroups:
-  - name: ng-12345
+  - name: ng-1
     instanceType: m5.large
     desiredCapacity: 2
     minSize: 2
     maxSize: 10
     availabilityZones: ["us-west-2a", "us-west-2b"]
-    privateNetworking: true # if only 'Private' subnets are given, this must be enabled
+#   privateNetworking: true # if only 'Private' subnets are given, this must be enabled
     ssh: # use existing EC2 key
+      allow: true
       publicKeyName: ec2-us-west-2
     iam:
       withAddonPolicies:
